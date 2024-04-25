@@ -11,6 +11,8 @@ Many, if not all of the commands below will have no context, they are just for r
  - https://github.com/S3cur3Th1sSh1t/PowerSharpPack
  - https://github.com/BeichenDream/GodPotato
  - https://github.com/peass-ng/PEASS-ng
+ - https://github.com/markwragg/PowerShell-Watch/blob/master/Watch/Public/Watch-Command.ps1
+ - https://github.com/DominicBreuker/pspy
  - much more
 
 ## Windows
