@@ -2,6 +2,8 @@
 Simple helpsheet or cheatsheet whatever you want to call it for enumerating machines, guidance on good commands to run, etc,.
 Probably wont put any linux since its straightforward. There are some simple scripts included in this repo that may prove to be helpful, i may update them or add more as time goes on.
 
+Many, if not all of the commands below will have no context, they are just for reference so you (really I) dont have to remeber the syntax of every single command and the alternatives to each
+
 
 ## Windows
 
