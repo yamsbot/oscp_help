@@ -1,8 +1,7 @@
 # OSCP Helpsheet
 Simple helpsheet or cheatsheet whatever you want to call it for enumerating machines, guidance on good commands to run, etc,.
-Probably wont put any linux since its straightforward but windows, idk man privs are always weird
+Probably wont put any linux since its straightforward
 
-----------------------------------------------------------------------
 
 ## Windows
 
