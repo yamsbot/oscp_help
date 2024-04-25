@@ -1,6 +1,6 @@
 # OSCP Helpsheet
 Simple helpsheet or cheatsheet whatever you want to call it for enumerating machines, guidance on good commands to run, etc,.
-Probably wont put any linux since its straightforward
+Probably wont put any linux since its straightforward. There are some simple scripts included in this repo that may prove to be helpful, i may update them or add more as time goes on.
 
 
 ## Windows
