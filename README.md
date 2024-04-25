@@ -4,6 +4,14 @@ Probably wont put any linux since its straightforward. There are some simple scr
 
 Many, if not all of the commands below will have no context, they are just for reference so you (really I) dont have to remeber the syntax of every single command and the alternatives to each
 
+## Random hidden gems
+ - https://github.com/antonioCoco/RunasCs
+ - https://github.com/nicocha30/ligolo-ng
+ - https://github.com/r3motecontrol/Ghostpack-CompiledBinaries
+ - https://github.com/S3cur3Th1sSh1t/PowerSharpPack
+ - https://github.com/BeichenDream/GodPotato
+ - https://github.com/peass-ng/PEASS-ng
+ - much more
 
 ## Windows
 
