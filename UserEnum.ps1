@@ -33,7 +33,7 @@ function CheckFiles {
 		Write-Host "Found:",$user
 		$userPath = "$user"
 		try {
-			$tmp = Get-ChildItem -Force -Path $userPath -Recurse -Include *.txt,*.kdbx,*.config,*.cnf,*.back,*.bck,*.doc,*.docx,*.zip,*.pdf,*.xls,*.xlsx  -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+			$tmp = Get-ChildItem -Force -Path $userPath -Recurse -Include *.txt,*.cfg,*.kdbx,*.config,*.cnf,*.back,*.bck,*.doc,*.docx,*.zip,*.pdf,*.xls,*.xlsx  -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
 			foreach ($file in $tmp) {
 				Write-Host $file
 			}
